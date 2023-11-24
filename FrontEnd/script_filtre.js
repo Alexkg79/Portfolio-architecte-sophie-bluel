@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             imageElement.alt = item.title;
             //<figcaption>
             const captionElement = document.createElement("figcaption");
-            captionElement.textContent = item.title; // Utilisez la propriété title
+            captionElement.textContent = item.title;
             //<img> dans <figure>
             figureElement.appendChild(imageElement);
             // <figcaption> dans <figure>
