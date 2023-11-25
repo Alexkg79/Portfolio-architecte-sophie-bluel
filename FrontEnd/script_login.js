@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.querySelector("form");
 
   loginForm.addEventListener("submit", function (e) {
-    e.preventDefault(); // Empêche rechargement de page
+    e.preventDefault();
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     // Créez un objet avec les données du formulaire
@@ -26,10 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then((data) => {
+        // Stockage du token dans le cookie
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7);
+        document.cookie = `authToken=${
+          data.token
+        }; expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict; path=/;`;
         // Traitement de la réponse de l'API ici
         console.log(data);
-        // Si l'authentification est ok, redirection sur page d'accueil
-        window.location.href = "index.html";
+        // Si l'authentification est ok, redirection sur page du dashboard
+        window.location.href = "dashboard.html";
       })
       .catch((error) => {
         console.error("Error login");
