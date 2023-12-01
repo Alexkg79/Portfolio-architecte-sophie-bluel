@@ -276,3 +276,41 @@ main #login h2{
     position: absolute;
     right: 0;
 }
+
+/* Page de dashboard */
+#mode_edition{
+	background-color: black;
+	width: 100vw;
+	height: 45px;
+	margin-left : calc(-1 * ((100vw - 100%) / 2));
+}
+#mode_edition span{
+	color: white;
+	display: flex;
+	justify-content: center;
+	padding-top: 15px;
+}
+#mode_edition span img{
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+}
+
+
+#logoutButton{
+	cursor: pointer;
+}
+.dashboard_section .title_and_icon{
+display: flex;
+justify-content: center;
+align-items: baseline;
+margin-bottom: -45px;
+}
+.dashboard_section .title_and_icon span{
+margin-left: 20px;
+display: flex;
+align-items: center;
+}
+.dashboard_section .title_and_icon span img{
+margin-right: 10px;
+}
