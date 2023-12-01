@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
   }
 
-  // Ajout d'un écouteur aux boutons de filtre
+  // Ajout d'un evenement aux boutons de filtre
   container_btn_filtre.addEventListener("click", function (event) {
     if (event.target.tagName === "BUTTON") {
       // Récupération de la catégorie en utilisant le texte du bouton

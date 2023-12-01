@@ -41,6 +41,41 @@
 		<div class="title_and_icon">
 			<h2>Mes Projets</h2><span id="updateGallery"><img src="./assets/icons/modification.png" alt="icone_de_modification">modifier</span>
 		</div>
+
+		<div id="modalUpdate" class="modal">
+			<div class="modal-content">
+			<h2>Galerie photo</h2>
+
+			  <span class="close">&times;</span>
+
+			  <div id="galleryModal"></div>
+
+			  <button id="btnAjouterPhoto">Ajouter une photo</button>
+			</div>
+		  </div>
+		<!-- <div id="modalAjout" class="modal">
+			<div class="modal-content">
+			<h2>Ajout photo</h2>
+
+			<img src="./assets/icons/arrow-left.png" alt="return" class="return">
+			<img src="./assets/icons/xmark.png" alt="return" class="close">
+
+			  <div class="ajout-photo-container">
+				<input type="file">
+				<label for="titleAjout">Titre</label>
+				<input type="text" id="titleAjout" name="titleAjout">
+				<label for="categorieAjout">Catégorie</label>
+				<select name="categorieAjout" id="categorieAjout">
+					<option value="Objets">Objets</option>
+					<option value="Appartements">Appartements</option>
+					<option value="Hotels & restaurants">Hotels & restaurants</option>
+				</select>
+			  </div>
+
+			  <button id="btnValiderAjout">Valider</button>
+			</div>
+		  </div> -->
+
 		<div id="container_btn_filtre" style="visibility: hidden;">
 			<button id="tous" class="active">
                 Tous
@@ -83,5 +118,6 @@
 </footer>
 <script src="./script_filtre.js"></script>
 <script src="./script_authentification_login.js"></script>
+<script src="./script_modal_dashboard.js"></script>
 </body>
 </html>
