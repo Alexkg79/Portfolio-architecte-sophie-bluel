@@ -374,7 +374,17 @@ margin-right: 10px;
 	margin-right: auto;
 	margin-top: 50px;
   }
+
   /* Modal ajout photo */
+ #modalAjout {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+  }
   .ajout-photo-container{
 	display: grid;
 	border-bottom: solid 1px #1D6154;
@@ -423,8 +433,7 @@ margin-right: 10px;
 	font-size: 20px;
 	cursor: pointer;
   }
-  .poubelle{
-		font-size: 20px; 
-		cursor: pointer; 
-		
-  }
+.delete{
+	cursor: pointer;
+	position: absolute;
+;}
