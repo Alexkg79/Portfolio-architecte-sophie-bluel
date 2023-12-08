@@ -278,6 +278,9 @@ main #login h2{
 }
 
 /* Page de dashboard */
+.visibilityFiltre{
+	visibility: hidden;
+}
 #mode_edition{
 	background-color: black;
 	width: 100vw;
@@ -336,7 +339,15 @@ margin-right: 10px;
 	border-radius: 5px;
   }
   
-  .close {
+  .closeModifier {
+	position: absolute;
+	width: 20px;
+	top: 18px;
+	right: 25px;
+	font-size: 20px;
+	cursor: pointer;
+  }
+  .closeAjout {
 	position: absolute;
 	width: 20px;
 	top: 18px;

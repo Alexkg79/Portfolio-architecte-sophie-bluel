@@ -1,10 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const btnModifier = document.getElementById("updateGallery");
-  const modal = document.getElementById("modalUpdate");
-  const closeModalBtn = document.querySelector(".close");
+  const btnUpdateGallery = document.getElementById("updateGallery");
+  const btnAjouterPhoto = document.getElementById("btnAjouterPhoto");
+  const btnValiderAjout = document.getElementById("btnValiderAjout");
 
-  //ouvre le modal
-  btnModifier.addEventListener("click", function () {
+  const modal = document.getElementById("modalUpdate");
+  const modalAjout = document.getElementById("modalAjout");
+
+  const closeModalBtnModifier = document.querySelector(".closeModifier");
+  const closeModalBtnAjout = document.querySelector(".closeAjout");
+  const returnModal = document.querySelector(".return");
+
+  //ouvre la modal
+  btnUpdateGallery.addEventListener("click", function () {
     modal.style.display = "block";
     const galleryModal = document.getElementById("galleryModal");
     // Efface le contenu avant d'ajouter de nouvelles images
@@ -12,23 +19,42 @@ document.addEventListener("DOMContentLoaded", function () {
     // Charge les photos de la galerie dans le modal
     updateGalleryInModal(galleryModal);
 
-    const btnAjouterPhoto = document.getElementById("btnAjouterPhoto");
-    btnAjouterPhoto.addEventListener("click", function () {});
+    btnAjouterPhoto.addEventListener("click", function () {
+        //ouvre la modal d'ajout de photo
+      modalAjout.style.display = "block";
+      btnValiderAjout.addEventListener("click", function () {
+      });
+    });
   });
 
-  // ferme le modal
-  closeModalBtn.addEventListener("click", function () {
+  // ferme les modal
+  closeModalBtnModifier.addEventListener("click", function () {
     modal.style.display = "none";
   });
+  closeModalBtnAjout.addEventListener("click", function () {
+    modalAjout.style.display = "none";
+  });
 
-  // Ferme le modal clique en dehors
+  // Ferme les modal clique en dehors
   window.addEventListener("click", function (event) {
     if (event.target === modal) {
       modal.style.display = "none";
     }
+    if (event.target === modalAjout) {
+      modalAjout.style.display = "none";
+    }
   });
 
-  // Fonction pour charger les photos de la galerie dans le modal
+//Btn retour
+returnModal.addEventListener("click", function () {
+    // Cacher la modal actuelle
+    modalAjout.style.display = "none";
+    // Afficher la modal précédente
+    modal.style.display = "block";
+  });
+
+
+// Fonction pour charger les photos de la galerie dans le modal
   function updateGalleryInModal(galleryContainer) {
     const apiUrl = "http://localhost:5678/api/works";
 
@@ -36,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         data.forEach((item) => {
+          console.log(item);
           //<figure>
           const figureElement = document.createElement("figure");
           //<img>
@@ -47,7 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
           iconElement.src = "./icons/poubelle.png";
           iconElement.alt = "delete";
           iconElement.classList = "delete";
-          console.log(iconElement);
+          //Récuperation id pour chaque element
+          iconElement.dataset.id = item.id;
           //<img> dans <figure>
           figureElement.appendChild(imageElement);
           //<i> dans <figure>
@@ -61,25 +89,53 @@ document.addEventListener("DOMContentLoaded", function () {
       );
   }
 
-  // Sélectionne toutes les icônes de poubelle dans la galerie
-  const allIcons = document.querySelectorAll("img");
+  // Recuperation du cookie pour authToken pour suppression
+  function getCookie(cookieName) {
+    const name = cookieName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(";");
+  
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i].trim();
+      if (cookie.indexOf(name) === 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
+  
+    return "";
+  }
+  
+  // Fonction pour supprimer dans la gallery
 
-  // Ajout d'un écouteur d'événement à chaque icône de poubelle
-  allIcons.forEach((icon) => {
-    icon.addEventListener("click", function () {
-      // Récupérer l'élément figure parent correspondant à l'icône
-      const figureElement = icon.closest("figure");
-
-      // Appele la fonction de suppression
-      deleteGalleryItem(figureElement);
-    });
+  galleryModal.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete")) {
+      // Récupérer l'identifiant unique de l'image 
+      const imageId = event.target.dataset.id;
+      // AuthTopken pour suppresion par rapport au droit.
+      const authToken = getCookie("authToken");
+      // Effectue une demande DELETE à l'API
+      fetch(`http://localhost:5678/api/works/${imageId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Erreur lors de la suppression de l'image");
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          const figureElement = document.querySelector(`[data-id="${imageId}"]`);
+          if (figureElement) {
+            figureElement.remove();
+          }
+        })
+        .catch(error => console.error("Erreur lors de la suppression de l'image:", error));
+    }
   });
 
-  // Fonction pour supprimer un élément de la galerie
-  function deleteGalleryItem(figureElement) {
-    // Supprimezl'élément du DOM
-    figureElement.remove();
-
-    // TODO: Ajout de la logique pour supprimer l'élément correspondant dans la base de données/API
-  }
 });
