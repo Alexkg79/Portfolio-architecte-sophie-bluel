@@ -45,3 +45,27 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 });
+
+//Si le token existe dans le cookie on redirige la page Login vers la page Dashboard
+
+function getCookie(cookieName) {
+  const name = `${cookieName}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim();
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+
+  return null; // Retourne null si le cookie n'est pas trouvé
+}
+
+const authToken = getCookie("authToken");
+
+if (authToken) {
+  // Redirige vers la page de dashboard 
+  window.location.href = "dashboard.html";
+}

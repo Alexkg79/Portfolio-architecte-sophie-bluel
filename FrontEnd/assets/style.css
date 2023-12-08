@@ -331,6 +331,8 @@ margin-right: 10px;
   
   .modal-content {
 	position: absolute;
+	max-width: 350px;
+	max-height: 410px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -347,20 +349,13 @@ margin-right: 10px;
 	font-size: 20px;
 	cursor: pointer;
   }
-  .closeAjout {
-	position: absolute;
-	width: 20px;
-	top: 18px;
-	right: 25px;
-	font-size: 20px;
-	cursor: pointer;
-  }
+
   #galleryModal {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-column-gap: 10px;
 	grid-row-gap: 25px;
-	padding-bottom: 70px;
+	padding-bottom: 100px;
 	border-bottom: solid 1px #1D6154;
   }
   #galleryModal img {
@@ -381,25 +376,35 @@ margin-right: 10px;
 	border-radius: 50px;
 	display: flex;
 	align-items: center;
+	padding-left: 40px;
+	padding-right: 40px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 50px;
+	margin-top: 40px;
   }
 
   /* Modal ajout photo */
  #modalAjout {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.7);
+  }
+  .closeAjout {
+	position: absolute;
+	width: 20px;
+	top: 18px;
+	right: 25px;
+	font-size: 20px;
+	cursor: pointer;
   }
   .ajout-photo-container{
 	display: grid;
 	border-bottom: solid 1px #1D6154;
 	padding-bottom: 25px;
+  }
+  .ajout-photo-container input[type="file"]{
+	width: 360px;
+	background-color: #E8F1F6;
+	display: grid;
   }
   .ajout-photo-container input{
 	width: 100%;

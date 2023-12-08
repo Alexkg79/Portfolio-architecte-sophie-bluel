@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnAjouterPhoto.addEventListener("click", function () {
         //ouvre la modal d'ajout de photo
       modalAjout.style.display = "block";
+      modal.style.display = "none";
       btnValiderAjout.addEventListener("click", function () {
       });
     });

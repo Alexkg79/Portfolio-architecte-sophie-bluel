@@ -15,12 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return null; // Retourne null si le cookie n'est pas trouvé
   }
 
-  // Vérifier si l'utilisateur est connecté
+  // Vérifie si l'utilisateur est connecté
   const authToken = getCookie("authToken");
   if (!authToken) {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    // Redirige vers la page de connexion si l'utilisateur n'est pas connecté
     window.location.href = "login.html";
   }
+
 
   // Bouton de déconnexion
   const logoutButton = document.getElementById("logoutButton");
@@ -28,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Efface le cookie contenant le token
     document.cookie =
       "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    // Rediriger vers la page de connexion
-    window.location.href = "login.html";
+    // Redirige vers la page de connexion
+    window.location.href = "index.html";
   });
 });
