@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
           data.token
         }; expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict; path=/;`;
         // Traitement de la réponse de l'API ici
-        console.log(data);
         // Si l'authentification est ok, redirection sur page du dashboard
         window.location.href = "dashboard.html";
       })
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Si le token existe dans le cookie on redirige la page Login vers la page Dashboard
-
 function getCookie(cookieName) {
   const name = `${cookieName}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
