@@ -45,12 +45,12 @@
 
 		<div id="modalUpdate" class="modal">
 			<div class="modal-content">
-			<h2>Galerie photo</h2>
+				<h2>Galerie photo</h2>
 			  <span class="closeModifier">&times;</span>
 
 			  <div id="galleryModal"></div>
 
-			  <button id="btnAjouterPhoto">Ajouter une photo</button>
+			  <button id="btnAjouterPhoto" type="button">Ajouter une photo</button>
 			</div>
 		</div>
 
@@ -67,8 +67,8 @@
 					<img src="./assets/icons/picture-add.png" alt="add">
 					<div id="imagePreview">
 					</div>
-					<button id="fileUploadButton">+ Ajouter photo</button>
-					<input type="file" id="fileUploadInput" style="display: none;" />
+					<button id="fileUploadButton" type="button">+ Ajouter photo</button>
+					<input type="file" id="fileUploadInput"/>
 					<p>jpg, png : 4mo max</p>
 				</div>
 				<label for="titleAjout">Titre</label>
@@ -80,9 +80,10 @@
 					<option value="2">Appartement</option>
 					<option value="3">Hôtels & Restaurants</option>
 				</select>
-			  </div>
+				<span id="messageAjout"></span>
+			</div>
 
-			  <button id="btnValiderAjout">Valider</button>
+			  <button id="btnValiderAjout" type="button">Valider</button>
 			</div>
 		</div>
 

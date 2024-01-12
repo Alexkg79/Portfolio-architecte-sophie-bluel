@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Efface le cookie contenant le token
     document.cookie =
       "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    // Redirige vers la page de connexion
+    // Redirige vers la page de accueil
     window.location.href = "index.html";
   });
 });

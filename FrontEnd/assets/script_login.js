@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.cookie = `authToken=${
           data.token
         }; expires=${expirationDate.toUTCString()}; Secure; SameSite=Strict; path=/;`;
-        // Traitement de la réponse de l'API ici
         // Si l'authentification est ok, redirection sur page du dashboard
         window.location.href = "dashboard.html";
       })

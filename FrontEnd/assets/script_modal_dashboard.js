@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (event) {
   const btnUpdateGallery = document.getElementById("updateGallery");
   const btnAjouterPhoto = document.getElementById("btnAjouterPhoto");
   const btnValiderAjout = document.getElementById("btnValiderAjout");
@@ -26,66 +26,80 @@ document.addEventListener("DOMContentLoaded", function () {
       return "";
     }
   
-  //ouvre la modal
-  btnUpdateGallery.addEventListener("click", function () {
+  //ouvre la modal de suppression
+  btnUpdateGallery.addEventListener("click", function (event) {
     modal.style.display = "block";
     const galleryModal = document.getElementById("galleryModal");
     // Efface le contenu avant d'ajouter de nouvelles images
     galleryModal.innerHTML = "";
     // Charge les photos de la galerie dans le modal
     updateGalleryInModal(galleryModal);
-    //ouvre la modal d'ajout de photo
-    btnAjouterPhoto.addEventListener("click", function () {
-      modalAjout.style.display = "block";
-      modal.style.display = "none";
-
-      btnValiderAjout.addEventListener("click", function () {
-          // Récupére les valeurs des champs du formulaire
-          const title = document.getElementById("titleAjout").value;
-          // le *1 pour convertir la string en number
-          const categoryId  = document.getElementById('categorieAjout').value*1;
-          const fileInput = document.getElementById('fileUploadInput');
-          const imageFile = fileInput.files[0];
-          
-          if (imageFile && title  && categoryId) {
-              const formData = new FormData();
-              formData.append("title", title);
-              formData.append("image", imageFile);
-              formData.append("category", categoryId);
-
-              const authToken = getCookie("authToken");
-              console.log("Auth Token:", authToken);
-              if (authToken) {
-                  fetch("http://localhost:5678/api/works", {
-                      method: "POST",
-                      headers: {
-                          Authorization: `Bearer ${authToken}`
-                      },
-                      body: formData
-                  })
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error(`Erreur lors de l'ajout : ${response.status} ${response.statusText}`);
-                      }
-                      return response.json();
-                  })
-                  .then(data => {
-                      console.log("Réponse de l'API après l'ajout :", data);
-                  })
-                  .catch(error => {
-                      console.error("Erreur lors de l'ajout :", error);
-                  });
-              } else {
-                  console.error("Token d'authentification manquant");
-              }
-            } else {
-              console.error("Données du formulaire manquantes ou invalides.");
-            }
-          });
-    });
+    event.preventDefault();
+    event.stopPropagation();
+  });
+  //ouvre modal d'ajout
+  btnAjouterPhoto.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    modalAjout.style.display = "block";
+    modal.style.display = "none";
+  });
+  //valider ajout
+  btnValiderAjout.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+        // Récupére les valeurs des champs du formulaire
+        const title = document.getElementById("titleAjout").value;
+        // le *1 pour convertir la string en number
+        const categoryId  = document.getElementById('categorieAjout').value*1;
+        const fileInput = document.getElementById('fileUploadInput');
+        const imageFile = fileInput.files[0];
         
+        if (imageFile && title  && categoryId) {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("image", imageFile);
+            formData.append("category", categoryId);
+
+            const authToken = getCookie("authToken");
+            if (authToken) {
+                fetch("http://localhost:5678/api/works", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erreur lors de l'ajout : ${response.status} ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Réponse de l'API après l'ajout :", data);
+                    const messageAjout = document.getElementById("messageAjout");
+                    messageAjout.style.color = "green"
+                    messageAjout.innerHTML = "Données ajoutées avec succès.";
+                })
+                .catch(error => {
+                    console.error("Erreur lors de l'ajout :", error);
+                });
+            } else {
+                console.error("Token d'authentification manquant");
+            }
+          } else {
+            console.error("Données du formulaire manquantes ou invalides.");
+            const messageAjout = document.getElementById("messageAjout");
+            messageAjout.style.color = "red"
+            messageAjout.innerHTML = "Données du formulaire manquantes ou invalides."
+          }
+  });
+
   // Fonction pour charger les photos de la galerie dans le modal
   function updateGalleryInModal(galleryContainer) {
+    event.preventDefault();
+    event.stopPropagation();
     const apiUrl = "http://localhost:5678/api/works";
 
     fetch(apiUrl)
@@ -104,24 +118,25 @@ document.addEventListener("DOMContentLoaded", function () {
           iconElement.alt = "delete";
           //Récuperation id pour chaque element
           iconElement.dataset.id = item.id;
-
+          
           //événement de suppression directement à l'icône
           iconElement.addEventListener("click", function(event) {
             event.preventDefault();
+            event.stopPropagation();
             deleteImage(event.target.dataset.id); // Fonction pour gérer la suppression
           });
-
+          
           //<img> dans <figure>
           figureElement.appendChild(imageElement);
           //<i> dans <img>
           figureElement.appendChild(iconElement);
-
           galleryContainer.appendChild(figureElement);
         });
       })
       .catch((error) =>
         console.error("Erreur lors du chargement des photos:", error)
       );
+
   }
   // Fonction pour supprimer dans la gallery
   function deleteImage(imageId) {
@@ -141,8 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(data => {
       // Retirer l'élément du DOM après la suppression réussie
-      débugger;
-
       const figureElement = document.querySelector(`[data-id="${imageId}"]`).closest("figure");
       if (figureElement) {
         figureElement.remove();
@@ -151,6 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch(error => {
       console.error("Erreur lors de la suppression de l'image:", error);
     });
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   // ferme les modal
@@ -172,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //Btn retour
-  returnModal.addEventListener("click", function () {
+  returnModal.addEventListener("click", function (event) {
     // Cache la modal actuelle
     modalAjout.style.display = "none";
     // Affiche la modal précédente
@@ -208,5 +223,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   });
 
-});
 });

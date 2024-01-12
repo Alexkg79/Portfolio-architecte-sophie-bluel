@@ -33,9 +33,11 @@ tous.addEventListener("click", () => {
 });
 
 //BTN FILTRE + AFFICHAGE PAR DEFAUT
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (event) {
+  event.preventDefault();
+  event.stopPropagation();
   const galleryContainer = document.getElementById("gallery");
-  const filterButtons = document.getElementById("container_btn_filtre");
+  const filtreButtons = document.getElementById("container_btn_filtre");
   const apiUrl = "http://localhost:5678/api/works";
 
   let currentCategory = null;
@@ -64,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
             figureElement.appendChild(captionElement);
             // <figure> dans la div gallery
             galleryContainer.appendChild(figureElement);
-            // galleryContainer.dataset.category =
           }
         });
       })
@@ -75,11 +76,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Ajout d'un evenement aux boutons de filtre
   container_btn_filtre.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
     if (event.target.tagName === "BUTTON") {
       // Récupération de la catégorie en utilisant le texte du bouton
       const category = event.target.innerText;
       // Mise à jour de la classe active pour le background-color
-      filterButtons
+      filtreButtons
         .querySelectorAll("button")
         .forEach((button) => button.classList.remove("active"));
       event.target.classList.add("active");

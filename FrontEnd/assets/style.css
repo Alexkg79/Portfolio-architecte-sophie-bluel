@@ -303,19 +303,19 @@ main #login h2{
 }
 
 .dashboard_section .title_and_icon{
-display: flex;
-justify-content: center;
-align-items: baseline;
-margin-bottom: -45px;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	margin-bottom: -45px;
 }
 .dashboard_section .title_and_icon span{
-margin-left: 20px;
-display: flex;
-align-items: center;
-cursor: pointer;
+	margin-left: 20px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 }
 .dashboard_section .title_and_icon span img{
-margin-right: 10px;
+	margin-right: 10px;	
 }
 
 /* Modal modifier */
@@ -328,6 +328,12 @@ margin-right: 10px;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.7);
   }
+.modal h2{
+	color: black;
+	font-weight: 200;
+	font-size: 22px;
+}
+
   
   .modal-content {
 	position: absolute;
@@ -396,7 +402,7 @@ margin-right: 10px;
 	margin-top: 40px;
   }
 
-  /* Modal ajout photo */
+/* Modal ajout photo */
  #modalAjout {
 	width: 100%;
 	height: 100%;
@@ -436,6 +442,7 @@ margin-right: 10px;
   .ajout-photo-container input[type="file"]{
     height: 150px;
 	width: 350px;
+	display: none;
   }
   .ajout-photo-container #imageAjout{
     height: 185px;
