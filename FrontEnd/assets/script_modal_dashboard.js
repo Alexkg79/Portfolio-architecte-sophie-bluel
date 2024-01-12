@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   function updateGalleryInModal(galleryContainer) {
     event.preventDefault();
     event.stopPropagation();
+    galleryContainer.innerHTML = '';
     const apiUrl = "http://localhost:5678/api/works";
 
     fetch(apiUrl)
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       if (!response.ok) {
         throw new Error("Erreur lors de la suppression de l'image");
       }
-      return response.json();
+      return response.text().then(text => text ? JSON.parse(text) : {});
     })
     .then(data => {
       // Retirer l'élément du DOM après la suppression réussie
@@ -160,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       if (figureElement) {
         figureElement.remove();
       }
+      updateGalleryInModal(document.getElementById("galleryModal"));
     })
     .catch(error => {
       console.error("Erreur lors de la suppression de l'image:", error);
