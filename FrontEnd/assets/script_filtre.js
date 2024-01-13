@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   let currentCategory = null;
 
   // Chargement des infos depuis l'API
-  function updateGallery(category) {
+  window.updateGallery = function (category) {
     galleryContainer.innerHTML = "";
     fetch(apiUrl)
       .then((response) => response.json())
@@ -72,12 +72,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
       .catch((error) =>
         console.error("Erreur lors de la récupération des données:", error)
       );
-  }
+  };
 
-  // Ajout d'un evenement aux boutons de filtre
+  // Recupère les Cataegories de l'api
+  fetch("http://localhost:5678/api/categories")
+    .then((response) => response.json())
+    .then((categories) => {
+      categories.forEach((category) => {
+        const button = document.createElement("button");
+        button.innerText = category.name;
+        filtreButtons.appendChild(button);
+      });
+    })
+    .catch((error) =>
+      console.error("Erreur lors de la récupération des catégories :", error)
+    );
+
+  //Ajout d'un evenement aux boutons de filtre
   container_btn_filtre.addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
     if (event.target.tagName === "BUTTON") {
       // Récupération de la catégorie en utilisant le texte du bouton
       const category = event.target.innerText;
@@ -86,12 +98,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         .querySelectorAll("button")
         .forEach((button) => button.classList.remove("active"));
       event.target.classList.add("active");
-
       // Mise à jour de la galerie click BTN
       currentCategory = category;
       updateGallery(currentCategory);
     }
   });
-  // Initialisez la galerie avec la catégorie par défaut
+  //Initialisez la galerie avec la catégorie par défaut
   updateGallery(currentCategory);
 });
